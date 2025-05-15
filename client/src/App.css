@@ -40,3 +40,88 @@
 .read-the-docs {
   color: #888;
 } */
+
+/* colors */
+:root{
+  --background: #FDF7E7;
+  --background-darker: #EBD3B1;
+  --dark: #977858;
+  --medium: #CE8358;
+  --lighter: #D4966C;
+  --contrasting: #AA9F82;
+  --contrasting-dark: #776d54;
+
+  background-color:  var(--background);
+
+}
+
+.logo {
+  display: flex;
+  width: 400px;
+}
+
+.logo-img-container{
+  width: 30%;
+}
+
+.logo-text{
+  width: 70%;
+}
+
+.logo-img-container img{
+  width: 100%;
+}
+
+
+
+.logo-name{
+  font-size: 4rem;
+  font-weight: 600;
+}
+
+.logo-one{
+  color: var(--contrasting-dark);
+}
+
+.logo-two{
+  color: var(--dark);
+}
+
+/* colors temporary -start */
+.colors{
+  display: flex;
+  gap: 10px;
+  
+}
+.colors > div {
+  width: 100px;
+  height: 100px;
+}
+
+.color1 {
+  background-color: var(--background) ;
+  border: 1px solid black;
+}
+
+.color2 {
+  background-color: var(--background-darker) ;
+    border: 1px solid black;
+
+}
+
+.color3 {
+  background-color: var(--dark) ;
+}
+
+.color4 {
+  background-color: var(--medium) ;
+}
+
+.color5 {
+  background-color: var(--lighter) ;
+}
+
+.color6 {
+  background-color: var(--contrasting) ;
+}
+/* colors temporary - end */
