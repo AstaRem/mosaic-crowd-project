@@ -40,7 +40,7 @@ export default function DonationForm({ storyId, onSuccess }) {
   return (
     <form onSubmit={handleSubmit} style={{ marginTop: 8 }}>
       <input
-        placeholder="Your Name (optional)"
+        placeholder="Your Name"
         value={donorName}
         onChange={e => setDonorName(e.target.value)}
       />

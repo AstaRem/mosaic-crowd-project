@@ -1,0 +1,8 @@
+.footer{
+    background-color: var(--contrasting-dark);
+    color: var(--background-lighter);
+    height: 100px;
+    line-height: 100px;;
+    padding: 0  0 0 20px;
+    margin-top: 50px;
+}

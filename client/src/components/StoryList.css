@@ -1,0 +1,12 @@
+.story-list{
+    list-style: none;
+    margin-top: 2.5rem;
+}
+
+.story-card {
+  background-color: var(--background-lighter);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin: 1.5rem 3rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}

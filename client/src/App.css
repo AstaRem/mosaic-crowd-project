@@ -44,48 +44,24 @@
 /* colors */
 :root{
   --background: #FDF7E7;
+  --background-lighter: #f8f6f2;
   --background-darker: #EBD3B1;
+  --background-slightly-darker: #e9d8c0;
   --dark: #977858;
   --medium: #CE8358;
   --lighter: #D4966C;
   --contrasting: #AA9F82;
   --contrasting-dark: #776d54;
+  --white: #fff;
+  --text-color:#213547;
+  --text-lighter: #547ea3;
 
   background-color:  var(--background);
 
 }
 
-.logo {
-  display: flex;
-  width: 400px;
-}
-
-.logo-img-container{
-  width: 30%;
-}
-
-.logo-text{
-  width: 70%;
-}
-
-.logo-img-container img{
-  width: 100%;
-}
 
 
-
-.logo-name{
-  font-size: 4rem;
-  font-weight: 600;
-}
-
-.logo-one{
-  color: var(--contrasting-dark);
-}
-
-.logo-two{
-  color: var(--dark);
-}
 
 /* colors temporary -start */
 .colors{

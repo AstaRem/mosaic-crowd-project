@@ -1,0 +1,7 @@
+.alert{
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 3.1rem;
+    font-size: 1.2rem;
+    font-weight: 500;
+}

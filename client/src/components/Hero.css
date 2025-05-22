@@ -1,0 +1,35 @@
+.hero-section{
+    width: 90%;
+    /* position: relative; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+
+
+}
+
+.hero-img-container {
+min-height: 60vh;   
+  max-height: 70vh;   
+  overflow: hidden;   
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+
+}
+
+.hero-img-container img {
+    width: 100%;
+    height: auto;
+}
+
+div.hero-section > h1{
+    text-align: center;
+    margin-top: -50px;
+    margin-bottom: 50px;
+    font-size: 2rem;
+}

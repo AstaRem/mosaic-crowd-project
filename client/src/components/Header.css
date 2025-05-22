@@ -1,0 +1,97 @@
+.header{
+    display: flex;
+    justify-content: space-between;
+    height: 150px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+
+}
+
+.logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 400px;
+  padding-left: 20px;
+  gap: 20px;
+
+}
+
+
+.logo-img-container{
+  width: 30%;
+}
+
+.logo-text{
+  width: 70%;
+}
+
+.logo-img-container img{
+  width: 100%;
+}
+
+
+
+.logo-name{
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.logo-one{
+  color: var(--contrasting-dark);
+}
+
+.logo-two{
+  color: var(--dark);
+}
+
+/* links */
+.nav{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 60%;
+    padding-right: 100px;
+    gap: 30px;
+    font-size: 1.2rem;
+    
+}
+
+nav a {
+    color: var(--text-color);
+}
+
+nav a:hover{
+    color: var(--text-lighter);
+}
+
+nav a.active{
+    color: var(--text-lighter);
+}
+
+/* user controls section */
+.user-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-left: 120px;
+}
+
+.welcome {
+  font-size: 1.1rem;
+  color: var(--text-color);
+}
+
+.logout-btn {
+  background-color: var(--medium);
+  color: var(--white);
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.logout-btn:hover {
+  background-color: var(--dark);
+}
+

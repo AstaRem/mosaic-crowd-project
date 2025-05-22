@@ -1,0 +1,16 @@
+.auth-page {
+  /* Use full viewport height minus header and footer heights */
+  min-height: calc(100vh - 300px); /* adjust if header/footer heights change */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* Optional: add some padding to prevent content clashing */
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+/* Push the card a bit lower if needed */
+.auth-card {
+  margin-top: 100px; /* adjust as needed */
+}

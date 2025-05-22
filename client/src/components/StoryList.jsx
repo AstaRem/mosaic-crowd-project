@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { fetchStories, donateToStory } from '../services/storyService.js';
 import DonationForm from './DonationForm.jsx';
+import './StoryList.css';
 
 export default function StoryList({ user }) {
   const [stories, setStories] = useState([]);
@@ -25,13 +26,13 @@ export default function StoryList({ user }) {
   };
 
   return (
-    <ul>
+    <ul className="story-list">
        
       {stories.map(story => {
         console.log('story data: ', story.collected_amount, story.target_amount, story.author_name)
         return (
 
-          <li key={story.id}>
+          <li className="story-card" key={story.id}>
             <h3>{story.title}</h3>
             <p>By: {story.author_name}</p>
             <p>{story.description}</p>
