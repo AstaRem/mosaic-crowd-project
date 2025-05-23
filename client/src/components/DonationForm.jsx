@@ -1,22 +1,30 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import './DonationForm.css';
 
-export default function DonationForm({ storyId, onSuccess }) {
+export default function DonationForm({ storyId, onSuccess, maxDonation }) {
   const [donorName, setDonorName] = useState('');
-  const [amount, setAmount]       = useState('');
-  const [error, setError]         = useState('');
+  const [amount, setAmount] = useState('');
+  const [error, setError] = useState('');
   const [confirmation, setConfirmation] = useState('');
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!amount || isNaN(amount) || Number(amount) <= 0) {
+    const donationValue = Number(amount);
+    if (!donationValue || isNaN(donationValue) || donationValue <= 0) {
       setError('Enter a valid amount');
       return;
     }
+    if (donationValue > maxDonation) {
+      setError(`Donation cannot exceed $${maxDonation.toFixed(2)}`);
+      return;
+    }
     try {
-      await onSuccess({ storyId, donorName, amount: Number(amount) });
-       setConfirmation(`Thank you for your donation of €${Number(amount).toFixed(2)}! We appreciate your support.`);
+      await onSuccess({ storyId, donorName, amount: donationValue });
+      setConfirmation(
+        `Thank you for your donation of $${donationValue.toFixed(2)}! We appreciate your support.`
+      );
       setDonorName('');
       setAmount('');
       setError('');
@@ -25,37 +33,28 @@ export default function DonationForm({ storyId, onSuccess }) {
     }
   };
 
-   if (confirmation) {
-    return (
-      <div style={{ marginTop: 8 }}>
-        <p>{confirmation}</p>
-        {/* <button onClick={() => navigate('/')}>Home</button> */}
-        <button onClick={() => navigate('/my-stories')} style={{ marginLeft: 8 }}>
-          My Stories
-        </button>
-      </div>
-    );
-  }
 
   return (
-    <form onSubmit={handleSubmit} style={{ marginTop: 8 }}>
+<>
+{confirmation && <p><strong>{confirmation}</strong></p>}
+    <form onSubmit={handleSubmit} className="donation-form">
       <input
         placeholder="Your Name"
         value={donorName}
-        onChange={e => setDonorName(e.target.value)}
+        onChange={(e) => setDonorName(e.target.value)}
       />
       <input
         placeholder="Amount"
         type="number"
         value={amount}
-        onChange={e => setAmount(e.target.value)}
+        onChange={(e) => setAmount(e.target.value)}
         required
-        style={{ marginLeft: 4 }}
+        max={maxDonation}
       />
-      <button type="submit" style={{ marginLeft: 4 }}>
-        Donate
-      </button>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+      <button type="submit">Donate</button>
+      {error && <p>{error}</p>}
     </form>
+
+</>
   );
 }

@@ -4,7 +4,7 @@ import './SubmitPage.css';
 
 export default function SubmitPage({ authorId }) {
   return (
-    <div className="container">
+    <div className="container submit-page">
       <StoryForm authorId={authorId} />
     </div>
   );

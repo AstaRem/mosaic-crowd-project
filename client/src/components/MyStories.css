@@ -1,26 +1,87 @@
-.my-stories-container h2{
-    margin-left: 1.5rem;
+.my-stories-container {
+  width: 100%;
+  padding: 20px;
 }
 
-.my-stories-container{
-    width: 100%;
+.my-stories-container h2 {
+  margin-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.my-stories-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 .my-stories-card {
+  display: flex;
   background-color: var(--background-lighter);
   border-radius: 8px;
   padding: 1.5rem;
-  margin: 1.5rem auto;
+  margin: 1.5rem 0;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   width: 100%;
-  max-width: 1800px;
+  max-width: 1200px; /* adjust as needed */
 }
 
-.my-stories-card h3 {
-  margin-bottom: 0.5rem;
-  
+.my-stories-card .image-container {
+  flex: 0 0 200px; /* fixed width for the image */
+  margin-right: 20px;
 }
 
-.my-stories-card p {
+.my-stories-card .story-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 4px;
+}
+
+.my-stories-card .details {
+  flex: 1;
+}
+
+.completed-header {
+  margin-left: 1.5rem;
+  margin-top: 2rem;
+  font-size: 1.8rem;
+  color: var(--medium);
+}
+
+.donation-details {
+  margin-top: 1rem;
+  padding: 0.5rem;
+  background-color: var(--background-darker);
+  border-radius: 4px;
+}
+
+.donation-details h4 {
   margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+  color: var(--contrasting);
+}
+
+.donation-details ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.donation-details li {
+  font-size: 0.9rem;
+  color: var(--text-color);
+  margin-bottom: 0.3rem;
+}
+
+.goal-marker {
+  display: block;
+  margin-top: 0.5rem;
+  font-size: 1.2rem;
+  color: var(--contrasting-dark);
+}
+
+.my-stories-container h2 {
+  margin-left: 1.5rem;
+  margin-top: 2rem; /* add or adjust this property */
+  margin-bottom: 1rem;
 }

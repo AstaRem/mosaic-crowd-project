@@ -6,6 +6,20 @@ import cookieParser from 'cookie-parser';
 // import { v4 } from 'uuid';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import multer from 'multer';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+// compute __dirname for ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Ensure the uploads folder exists
+const uploadDir = path.join(__dirname, 'uploads');
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir, { recursive: true });
+}
 
 
 
@@ -22,6 +36,21 @@ app.use(express.json());
 
 // Cookies
 app.use(cookieParser());
+
+// uploading images
+// 1. Destination folder (create /uploads at project root)
+// 2. Unique filename to avoid collisions
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => cb(null, path.join(__dirname, 'uploads')),
+  filename:    (req, file, cb) => cb(null, `${Date.now()}-${file.originalname}`)
+});
+
+const upload = multer({ storage });
+
+// Serve uploaded files statically under /uploads
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+// 
+
 
 //connecting to DB
 
@@ -96,27 +125,81 @@ app.post('/api/login', (req, res) => {
   });
 });
 
+
+
+
+// app.get('/api/my-stories', authenticateToken, (req, res) => {
+//   const sql = `
+//     SELECT
+//       s.*,
+//       u.name               AS author_name,
+//       COALESCE(SUM(d.amount), 0) AS collected_amount,
+//       COUNT(d.id)          AS donation_count,
+//       s.status
+//     FROM stories AS s
+//     JOIN users    AS u ON u.id = s.author_id
+//     LEFT JOIN donations AS d ON d.story_id = s.id
+//     WHERE s.author_id = ?
+//     GROUP BY s.id
+//     ORDER BY s.created_at DESC
+//   `;
+//   con.execute(sql, [req.user.id], (err, results) => {
+//     if (err) {
+//       console.error(err);
+//       return res.status(500).json({ error: 'DB error' });
+//     }
+//     res.json({ stories: results });
+//   });
+// });
+
 app.get('/api/my-stories', authenticateToken, (req, res) => {
-  const sql = `
+  const storiesSql = `
     SELECT
       s.*,
-      u.name               AS author_name,
+      u.name AS author_name,
       COALESCE(SUM(d.amount), 0) AS collected_amount,
-      COUNT(d.id)          AS donation_count,
-      s.status
+      s.status,
+      s.created_at
     FROM stories AS s
-    JOIN users    AS u ON u.id = s.author_id
+    JOIN users AS u ON u.id = s.author_id
     LEFT JOIN donations AS d ON d.story_id = s.id
     WHERE s.author_id = ?
     GROUP BY s.id
     ORDER BY s.created_at DESC
   `;
-  con.execute(sql, [req.user.id], (err, results) => {
+  con.query(storiesSql, [req.user.id], (err, stories) => {
     if (err) {
       console.error(err);
       return res.status(500).json({ error: 'DB error' });
     }
-    res.json({ stories: results });
+    if (!stories.length) {
+      return res.json({ stories: [] });
+    }
+    // Get the list of story IDs to fetch donation details
+    const storyIds = stories.map(story => story.id);
+    const donationsSql = `
+      SELECT story_id, donor_name, amount
+      FROM donations
+      WHERE story_id IN (?)
+    `;
+    con.query(donationsSql, [storyIds], (err, donations) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).json({ error: 'DB error' });
+      }
+      // Group donations by story_id
+      const donationMap = {};
+      donations.forEach(d => {
+        if (!donationMap[d.story_id]) donationMap[d.story_id] = [];
+        donationMap[d.story_id].push({ donor_name: d.donor_name, amount: d.amount });
+      });
+      // Attach the donation array to the corresponding story object
+      const storiesWithDonations = stories.map(story => ({
+        ...story,
+        donations: donationMap[story.id] || []
+      }));
+      res.json({ stories: storiesWithDonations });
+    });
   });
 });
 
@@ -179,20 +262,23 @@ function requireAdmin(req, res, next) {
 //-------middleware end
 
 // POST endpoint to submit a new story, protected by auth middleware
-app.post('/api/stories', authenticateToken, (req, res) => {
+app.post('/api/stories', authenticateToken, upload.single('image'), (req, res) => {
   // Optionally, you can verify that req.user.id matches req.body.author_id
-  const { title, description, image_url, target_amount, author_id } = req.body;
+  const { title, description, target_amount, author_id } = req.body; //removed image_url,
+    const image_url = req.file
+      ? `/uploads/${req.file.filename}`
+      : '';
   if (!title || !description || !target_amount || !author_id) {
     return res.status(400).json({ error: 'Missing required fields' });
   }
   // Example check: ensure the token owner matches the author_id provided
-  if (req.user.id !== author_id) {
+  if (req.user.id !== Number(author_id)) {
     return res.status(403).json({ error: 'Invalid author' });
   }
   const sql = 'INSERT INTO stories (title, description, image_url, target_amount, author_id) VALUES (?, ?, ?, ?, ?)';
   con.execute(
     sql,
-    [title, description, image_url || '', target_amount, author_id],
+    [title, description, image_url, target_amount, author_id],
     (err, results) => {
       if (err) {
         console.error('Error inserting story:', err);
@@ -286,6 +372,43 @@ app.delete(
       [storyId],
       (err) => {
         if (err) return res.status(500).json({ error: 'DB error' });
+        res.json({ success: true });
+      }
+    );
+  }
+);
+
+
+app.delete(
+  '/api/admin/stories/:id/delete',
+  authenticateToken,
+  requireAdmin,
+  (req, res) => {
+    const storyId = Number(req.params.id);
+    con.execute('DELETE FROM stories WHERE id = ?', [storyId], (err, results) => {
+      if (err) {
+        console.error('Error deleting story:', err);
+        return res.status(500).json({ error: 'DB error' });
+      }
+      res.json({ success: true });
+    });
+  }
+);
+
+app.post(
+  '/api/admin/stories/:id/hide',
+  authenticateToken,
+  requireAdmin,
+  (req, res) => {
+    const storyId = Number(req.params.id);
+    con.execute(
+      'UPDATE stories SET status = "hidden" WHERE id = ?',
+      [storyId],
+      (err) => {
+        if (err) {
+          console.error('Error hiding story:', err);
+          return res.status(500).json({ error: 'DB error' });
+        }
         res.json({ success: true });
       }
     );

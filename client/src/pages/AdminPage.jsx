@@ -1,10 +1,10 @@
 import React from 'react';
 import AdminPanel from '../components/AdminPanel';
-// import './AdminPage.css';
+import './AdminPage.css';
 
 export default function AdminPage() {
   return (
-    <div className="container">
+    <div className="admin-page">
       <AdminPanel />
     </div>
   );

@@ -47,6 +47,8 @@
   --background-lighter: #f8f6f2;
   --background-darker: #EBD3B1;
   --background-slightly-darker: #e9d8c0;
+  --delete: #a15548;
+  --delete-dark: #6d372e;
   --dark: #977858;
   --medium: #CE8358;
   --lighter: #D4966C;
@@ -58,6 +60,10 @@
 
   background-color:  var(--background);
 
+}
+
+strong {
+  font-weight: 700;
 }
 
 

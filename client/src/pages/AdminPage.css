@@ -1,0 +1,4 @@
+.admin-page {
+  min-height: calc(100vh - 300px); /* adjust if header/footer heights change */
+  padding: 20px;
+}

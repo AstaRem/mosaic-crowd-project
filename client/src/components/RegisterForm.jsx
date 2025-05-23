@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './RegisterForm.css';
 
 export default function RegisterForm() {
+
   const [user, setUser] = useState({
     name: '',
     email: '',
@@ -10,6 +12,8 @@ export default function RegisterForm() {
     role: 'author'
   });
   const [message, setMessage] = useState('');
+
+  const navigate = useNavigate();
 
   function handleChange(e) {
     setUser({ ...user, [e.target.name]: e.target.value });
@@ -19,7 +23,8 @@ export default function RegisterForm() {
     e.preventDefault();
     try {
       const res = await axios.post('http://localhost:5000/api/register', user);
-      setMessage(`User registered! ID: ${res.data.id}`);
+      setMessage(`User registered successfully!`);
+      navigate('/');
     } catch (err) {
       console.error('Error registering user:', err);
       setMessage('Error registering user');

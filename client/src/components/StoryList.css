@@ -1,12 +1,57 @@
-.story-list{
-    list-style: none;
-    margin-top: 2.5rem;
+.story-list {
+  list-style: none;
+  margin-top: 2.5rem;
 }
 
 .story-card {
+  display: flex;
   background-color: var(--background-lighter);
   border-radius: 8px;
   padding: 1.5rem;
   margin: 1.5rem 3rem;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.image-container {
+  flex: 0 0 200px;
+  /* fixed width for the image */
+  margin-right: 20px;
+}
+
+.story-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 4px;
+}
+
+.details {
+  flex: 1;
+}
+
+
+
+
+.story-card .hide {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 1rem;
+  /* Adjust if needed */
+  background-color: var(--contrasting-dark);
+  color: var(--white);
+}
+
+.story-card .hide:hover {
+  background-color: var(--contrasting);
+}
+
+.goal-reached {
+  margin-right: 20px;
+}
+
+div.invite-to-login-container>ul>h2 {
+  margin: 3rem 0 2rem 4rem;
+
 }

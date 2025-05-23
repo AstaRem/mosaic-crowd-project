@@ -21,11 +21,16 @@ export async function fetchStories() {
 }
 
 // Submit a new story
-export async function submitStory(storyData) {
-  const res = await axios.post('/api/stories', storyData);
-  return res.data;
+export async function submitStory(formData) {
+  return axios.post(
+    '/api/stories',
+    formData,
+    {
+      headers: { 'Content-Type': 'multipart/form-data' },
+      withCredentials: true
+    }
+  );
 }
-
 // Donate to a story
 export async function donateToStory(storyId, { donorName, amount }) {
   const res = await axios.post(`/api/stories/${storyId}/donate`, {

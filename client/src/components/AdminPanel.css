@@ -1,0 +1,102 @@
+.admin-panel {
+  width: 100%;
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+.admin-panel h1 {
+  text-align: center;
+  margin-bottom: 1rem;
+  font-size: 2rem;
+}
+
+.admin-story-card {
+  display: flex;
+  background-color: var(--background-lighter);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin: 1.5rem auto;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 100%;
+}
+
+.admin-story-card .image-container {
+  flex: 0 0 200px;
+  margin-right: 20px;
+}
+
+.admin-story-card .story-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 4px;
+}
+
+.admin-story-card .details {
+  flex: 1;
+}
+
+.admin-story-card button {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 0.5rem;
+  width: 120px;
+}
+
+.admin-story-card button.approve {
+  background-color: var(--contrasting-dark);
+  color: var(--white);
+}
+
+.admin-story-card button.approve:hover {
+  background-color: var(--dark);
+}
+
+.admin-story-card button.reject {
+  background-color: var(--medium);
+  color: var(--white);
+}
+
+.admin-story-card button.reject:hover {
+  background-color: var(--background-slightly-darker);
+  color: var(--dark);
+}
+
+.admin-story-card button.delete {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 0.5rem;
+  width: 120px;
+  background-color: var(--delete);
+  color: var(--white);
+}
+
+.admin-story-card button.delete:hover {
+  background-color: var(--delete-dark);
+}
+
+.admin-story-card .button-group {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
+}
+
+.admin-story-card button.hide {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 0.5rem;
+  width: 120px;
+  background-color:  var(--contrasting-dark);
+  color: var(--white);
+}
+
+.admin-story-card button.hide:hover {
+  background-color:  var(--contrasting);
+}

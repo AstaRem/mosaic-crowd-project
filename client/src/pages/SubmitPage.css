@@ -1,0 +1,8 @@
+.submit-page {
+  min-height: calc(100vh - 300px); /* adjust value based on your header and footer heights */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* centers the StoryForm vertically */
+  align-items: center; /* centers the form horizontally */
+  padding: 50px 20px;
+}
