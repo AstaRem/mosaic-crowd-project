@@ -12,6 +12,7 @@ export default function RegisterForm() {
     role: 'author'
   });
   const [message, setMessage] = useState('');
+  const [isRegistered, setIsRegistered] = useState(false);
 
   const navigate = useNavigate();
 
@@ -24,11 +25,20 @@ export default function RegisterForm() {
     try {
       const res = await axios.post('http://localhost:5000/api/register', user);
       setMessage(`User registered successfully!`);
-      navigate('/');
+      setIsRegistered(true);
     } catch (err) {
       console.error('Error registering user:', err);
       setMessage('Error registering user');
     }
+  }
+
+  if(isRegistered){
+    return(
+      <div className="register-success">
+        <p>{message}</p>
+        <button onClick={()=> navigate('/login')}>Log in</button>
+      </div>
+    )
   }
 
   return (
