@@ -1,5 +1,5 @@
 
-# Mosaic Crowd- full stack crowdfunding project
+# Mosaic Crowd - full-stack crowdfunding project
 
 # Data Flow Overview for Mosaic Crowd
 
